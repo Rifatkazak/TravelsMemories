@@ -6,24 +6,38 @@ import Input from './Input';
 import  {GoogleLogin} from 'react-google-login';
 import Icon from './icon';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import {signin, signup} from '../actions/auth'
+
+const InitialState = {firstName : "" , lastName : "" , email : "" , password : "", confirmPassword : ""};
 
 const Auth = () => {
      const [showPassword, setShowPassword] = useState(false);
      const [isSignup, setIsSignup] = useState(false);
+     const [formData, setFormData] = useState(InitialState);
      const classes = useStyles();
      const dispatch = useDispatch();
+     const history = useHistory();
 
-     const handleSubmit = () => {
+     const handleSubmit = (e) => {
+            e.preventDefault();
+            if(isSignup){
+                dispatch(signup(formData, history))
+            }else{
+                dispatch(signin(formData, history))
 
+            }
      }
-     const handleChange = () => {
-
+     const handleChange = (e) => {
+            setFormData({...formData, [e.target.name]: e.target.value})
      }
      const googleSuccess = async (res) => {
         const result = res?.profileObj;
         const token = res?.tokenId;
         try {
-            dispatch({type: 'AUTH', data : {result, token}})
+            dispatch({type: 'AUTH', data : {result, token}});
+
+            history.push('/');
         } catch (error) {
             console.log(error);
         }
@@ -34,6 +48,7 @@ const Auth = () => {
      }
      const switchMode = () => {
         setIsSignup((isSignup) => !isSignup)
+        setShowPassword(false);
      }
      const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword)
