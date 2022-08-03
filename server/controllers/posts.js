@@ -12,9 +12,9 @@ export const getPosts = async (req, res) =>  {
     }
 }
 export const createPost = async (req, res) => {
-    const { title, message, selectedFile, creator, tags } = req.body;
+    const post = req.body;
 
-    const newPostMessage = new PostMessage({ title, message, selectedFile, creator, tags })
+    const newPostMessage = new PostMessage({...post, creator:res.userId, createdAt: new Date().toISOString()})
 
     try {
         await newPostMessage.save()
@@ -57,7 +57,7 @@ export const likePost = async (req, res) => {
     
     const post = await PostMessage.findById(id);
 
-    const index = post.like.findIndex((id) =>  id === String(req.userId));
+    const index = post.likes.findIndex((id) => id ===String(req.userId));
     if(index === -1){
         post.likes.push(req.userId);
     }else{
