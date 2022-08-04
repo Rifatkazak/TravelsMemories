@@ -35,9 +35,11 @@ import decode from 'jwt-decode';
     return (
     <AppBar className={classes.AppBar} position='static' color='inherit'>
         <div className={classes.brandContainer}>
-            <Typography className={classes.heading} variant='h2' align='center'>
-                    Travel Memories
-            </Typography>
+            <Link to="/" >
+                <Typography className={classes.heading} variant='h2' align='center'>
+                        Travel Memories
+                </Typography>
+            </Link>
             <Toolbar className={classes.toolbar}>
                 {user ? 
                 <div className={classes.profile}>
