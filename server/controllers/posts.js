@@ -1,19 +1,39 @@
 
 import mongoose from 'mongoose';
+import express from 'express';
 import PostMessage from "../models/postsMessages.js";
 
-export const getPosts = async (req, res) =>  {
-    try {
-        const postsMessages = await PostMessage.find();
+const router = express.Router();
 
-        res.status(200).json(postsMessages); // 200 OK
+export const getPosts = async (req, res) =>  {
+    const { page } = req.query;
+    try {
+        const _limit = 2 ;
+        const startIndex = (Number(page) -1 ) * _limit;
+        const total = await PostMessage.countDocuments({})
+        const posts = await PostMessage.find().sort({_id:-1}).limit(_limit).skip(startIndex); // tesr sıralama
+
+        res.status(200).json({data:posts, currentPage:Number(page), numberOfPages : Math.ceil(total / _limit)}); // 200 OK
     } catch (error) {
         res.status(404).json({message:error.message}); // 404 Not Found
     }
 }
 
+export const getPost = async (req, res) => { 
+    const { id } = req.params;
+
+    try {
+        const post = await PostMessage.findById(id);
+        
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
+
 
     try {
         const title = new RegExp(searchQuery, "i");
@@ -83,3 +103,21 @@ export const likePost = async (req, res) => {
     
     res.json(updatedPost);
 }
+
+export const commentPost = async (req, res) => {
+    const { id } = req.params;
+    const { value } = req.body;
+
+
+    const post = await PostMessage.findById(id);
+
+
+    post.comments.push(value);
+
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
+
+    res.json(updatedPost);
+};
+
+export default router;

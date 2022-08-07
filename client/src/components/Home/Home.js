@@ -23,14 +23,12 @@ const Home = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const page = query.get('page') || 1 ;
-    const searchQuerry = query.get('searchQuerry');
+    const searchQuery = query.get('searchQuerry');
     const [search, setSearch] = useState('');
     const [tags, setTags] = useState([]);
     
 
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [currentId,dispatch])
+
 
     const searchPost = () => {
         if (search.trim() || tags) {
@@ -72,9 +70,11 @@ const Home = () => {
                                 <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
                             </AppBar>
                             <Form  currentId={currentId} setCurrentId={setCurrentId}/>
-                            <Paper elevation={6} >
-                                <Pagination />
+                            {(!searchQuery && !tags.length) && (
+                            <Paper className={classes.pagination} elevation={6}>
+                                <Pagination page={page} />
                             </Paper>
+                        )}
                         </Grid>
                     </Grid>
                 </Container>
