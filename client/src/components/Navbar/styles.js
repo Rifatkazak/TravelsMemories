@@ -12,8 +12,13 @@ export default makeStyles((theme) => ({
     padding: '10px 50px',
   },
   heading: {
+    display: 'flex',
+    marginLeft:"2rem",
     color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',
+  },
+  headingText: {
+    paddingTop:"5px"
   },
   image: {
     marginLeft: '15px',

@@ -4,6 +4,7 @@ import useStyles from './styles';
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
+import travelLogo from '../../assets/travelLogo.png';
 
  const Navbar = () => {
     const classes = useStyles();
@@ -35,8 +36,9 @@ import decode from 'jwt-decode';
     return (
     <AppBar className={classes.AppBar} position='static' color='inherit'>
         <div className={classes.brandContainer}>
-            <Link to="/" >
-                <Typography className={classes.heading} variant='h2' align='center'>
+            <Link className={classes.heading} to="/" >
+                <img src={travelLogo}  alt="logo" style={{width: "50px", height: "50px", marginRight:"10px"}}/>
+                <Typography className={classes.headingText} color='primary' variant='h4' align='center'>
                         Travel Memories
                 </Typography>
             </Link>
