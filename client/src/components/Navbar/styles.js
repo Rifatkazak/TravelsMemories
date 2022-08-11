@@ -46,4 +46,19 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  avatar:{
+    height:"100%",
+    borderRadius:0,
+  },
+  mainLogo:{
+    color: "#a1a1a1",
+    justifyContent:"left",
+    '&:hover':{
+      background:"transparent"
+    }
+  },
+  grow:{
+    display:"flex",
+    flexGrow:1
+  },
 }));

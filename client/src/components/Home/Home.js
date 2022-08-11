@@ -11,6 +11,7 @@ import Posts from '../Posts/Posts';
 import Pagination from '../Pagination';
 import ChipInput from 'material-ui-chip-input';
 import { getPostsBySearch } from '../../actions/posts';
+import SwipeableTextMobileStepper from './Swippable';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search) //take params from url
@@ -54,6 +55,7 @@ const Home = () => {
                 <Container maxWidth='xl'>
                     <Grid className={classes.gridContainer} container  justify='space-between' alignItems='stretch' spacing={3}>
                         <Grid item xs={12} sm={6}  md={9} marginTop={4}>
+                            <SwipeableTextMobileStepper />
                             <Posts setCurrentId={setCurrentId}  />
                         </Grid>
                         <Grid item xs={12} sm={4} md={3} marginTop={2}>
